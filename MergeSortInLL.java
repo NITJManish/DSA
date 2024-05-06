@@ -5,18 +5,7 @@ space complexity  O( log n )
 */
 
 
-//Node type integer
-public class Node<T>{
-    T data;
-    Node<T> next;
-    Node(T data){
-        this.data=data;
-        // next=null;
-    }
-}
-
-
-public class Solution{
+public class MergeSortInLL{
     private static Node<Integer>findMid(Node<Integer>head){
         if(head==null)
         return head;
