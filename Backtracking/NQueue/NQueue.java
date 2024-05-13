@@ -10,7 +10,7 @@ public class NQueue {
             //valid borad configuration
             for(int i=0;i<n;i++){
                 for(int j=0;j<n;j++){
-                    Sysytem.out.print(board[i][j]+" ");
+                    System.out.print(board[i][j]+" ");
                 }
             }
             System.out.println();
@@ -21,7 +21,7 @@ public class NQueue {
         for(int j=0;j<n;j++){
             if(isBoardSafe(board,row,j)){
                 board[row][j]=1;
-                placeQueen(board,row+1,n);
+                placeQueens(board,row+1,n);
                 board[row][j]=0;
             }
         }
@@ -33,17 +33,17 @@ public class NQueue {
                 return false;
             }
         }
-        for(int i=row+1,j=col+1;i>=0 && j>=0;i--,j--){
+        for(int i=row+1,j=col+1;i<n && j<n;i++,j++){
             if(board[i][j]==1){
                 return false;
             }
         }
-        for(int i=row-1,j=col+1;i>=0 && j>=0;i--,j--){
+        for(int i=row-1,j=col+1;i>=0 && j<n;i--,j++){
             if(board[i][j]==1){
                 return false;
             }
         }
-        for(int i=row+1,j=col-1;i>=0 && j>=0;i--,j--){
+        for(int i=row+1,j=col-1;i<n && j>=0;i++,j--){
             if(board[i][j]==1){
                 return false;
             }
