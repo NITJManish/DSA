@@ -1,0 +1,154 @@
+## An integer matrix of size (M x N) has been given. Find out the minimum cost to reach from the cell (0, 0) to (M - 1, N - 1).
+
+From a cell (i, j), you can move in three directions:
+
+1. ((i + 1),  j) which is, "down"
+2. (i, (j + 1)) which is, "to the right"
+3. ((i+1), (j+1)) which is, "to the diagonal"
+The cost of a path is defined as the sum of each cell's values through which the route passes.
+
+Sample Input 1 :
+3 4
+3 4 1 2
+2 1 8 9
+4 7 8 1
+Sample Output 1 :
+13
+Sample Input 2 :
+3 4
+10 6 9 0
+-23 8 9 90
+-200 0 89 200
+Sample Output 2 :
+76
+Sample Input 3 :
+5 6
+9 6 0 12 90 1
+2 7 8 5 78 6
+1 6 0 5 10 -4 
+9 6 2 -10 7 4
+10 -2 0 5 5 7
+Sample Output 3 :
+18
+
+//recursive code
+
+class Solution{
+    public static int minCostPath(int cost[][],int i,int j){
+        int n=cost.length;
+        int m=cost[0].length;
+        //spaecial cost
+        if(i==n && j==m){
+            return cost[i][j];
+        }
+        if(i>=n || j>=m){
+            return Integer.MAX.VALUE;
+        }
+        int ans1=minCostPath(cost,i+1,j);
+        int ans2=minCostPath(cost,i,j+1);
+        int ans3=minCostPath(cost,i+1,j+1);
+        int myAns=Math.min(ans1,Math.min(ans2,ans3));
+        return myAns;
+    }
+    public static void main(String args[]){
+        int cost[][]={{1,5,11},{8,13,12},{2,3,7},{15,16,18}};
+        int ans=minCostPath(cost,0,0);
+        System.out.print(ans);
+    }
+}
+
+//memoization 
+
+public class MinCost {
+
+public static int minCostR(int[][] cost, int i, int j, int[][] dp) {
+int m = cost.length;
+int n = cost[0].length;
+// Special Case 
+if(i==m-1 && j==n-1) {
+return cost[i][j];
+}
+// Base Case 
+if(i>=m | j>=n) {
+return Integer.MAX_VALUE;
+}
+int ans1, ans2, ans3;
+if (dp[i+1][j] == Integer.MIN_VALUE) {
+ans1 = minCost(cost, i+1, j);
+dp[i+1][j] = ans1; 
+}else{
+ans1 = dp[i+1][j];
+}
+if(dp[i][j+1] == Integer.MIN_VALUE) {
+ans2 = minCost(cost, i, j+1);
+dp[i][j+1] = ans2;
+}else{
+ans2 = dp[i][j+1];
+}
+if (dp [i+1] [j+1] == Integer.MIN_VALUE) {
+ans3 = minCost(cost,i+1, j+1);
+dp [i+1] [j+1] = ans3; 
+}else{
+ans3 = dp[i+1] [j+1];
+}
+int myAns = cost[i][j] + Math.min(ans1, Math.min(ans2, ans3));
+return myAns;
+}
+
+public static void main(String[] args) {
+// TODO Auto-generated method stub
+
+int[][] cost = {{1,5,11}, {8,13,12}, {2,3,7}, {15, 16, 18}};
+int[][] dp = new int[cost.length+1] [cost[0]. length+1];
+for(int i=0;i<dp.length; i++) {
+for(int j=0; j<dp[0].length; j++) {
+dp[i][j] = Integer.MIN_VALUE;
+}
+}
+int ans= mincostR(cost,0,0,dp);
+System.out.println(ans);
+}
+}
+
+//Iterative solution
+
+public class MinCost {
+public static int minCostI(int[][] cost) {
+int m = cost.length;
+int n = cost[0].length;
+
+int[][] dp = new int[m+1] [n+1];
+
+for(int i=0; i<dp.length; i++) {
+for(int j=0; j<dp[i].length; j++) {
+dp[i][j] = Integer.MAX_VALUE;
+}
+}
+for(int i=m-1; i>=0; i--) {
+for(int j=n-1; j>=0; j--) {
+if(i==m-1 && j==n-1){
+dp[i][j]=cost[i][j];
+continue;
+}
+int ans1 = dp[i][j+1];
+int ans 2 = dp[i+1][j]; 
+int ans 3 = dp [i+1][j+1];
+dp[i][j] = cost[i][j] + Math.min(ans1, Math.min(ans2, ans3));
+}
+}
+return dp[0][0];
+}
+public static void main(String[] args) {
+// TODO Auto-generated method stub
+
+int[][] cost = {{1,5,11}, {8,13,12}, {2,3,7}, {15, 16, 18}};
+int[][] dp = new int[cost.length+1] [cost[0]. length+1];
+for(int i=0;i<dp.length; i++) {
+for(int j=0; j<dp[0].length; j++) {
+dp[i][j] = Integer.MIN_VALUE;
+}
+}
+int ans= mincostI(cost);
+System.out.println(ans);
+}
+}
