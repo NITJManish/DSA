@@ -1,0 +1,166 @@
+## You are given two strings S and T of lengths M and N, respectively. Find the 'Edit Distance' between the strings.
+
+Edit Distance of two strings is the minimum number of steps required to make one string equal to the other. In order to do so, you can perform the following three operations:
+
+1. Delete a character
+2. Replace a character with another one
+3. Insert a character
+Note :
+Strings don't contain spaces in between.
+
+
+Sample Input 1 :
+abc
+dc
+Sample Output 1 :
+2
+ Explanation to the Sample Input 1 :
+ In 2 operations we can make string T to look like string S.
+First, insert character 'a' to string T, which makes it "adc".
+
+And secondly, replace the character 'd' of string T with 'b' from the string S. This would make string T as "abc" which is also string S. 
+
+Hence, the minimum distance.
+Sample Input 2 :
+whgtdwhgtdg
+aswcfg
+Sample Output 2 :
+9
+
+//using recursion
+//time comlexity  O(3 min(M,N) )
+public class EditDistance {
+
+    // Function to calculate the edit distance using recursion
+    public static int editDistance(String S, String T) {
+        return editDistanceHelper(S, T, S.length(), T.length());
+    }
+
+    // Helper function for recursion
+    private static int editDistanceHelper(String S, String T, int m, int n) {
+        // Base cases
+        if (m == 0) return n; // If S is empty, we need to insert all characters of T
+        if (n == 0) return m; // If T is empty, we need to remove all characters of S
+
+        // If last characters are the same, no operation is needed, move to the next characters
+        if (S.charAt(m - 1) == T.charAt(n - 1)) {
+            return editDistanceHelper(S, T, m - 1, n - 1);
+        }
+
+        // If last characters are different, consider all three operations
+        int insertOp = editDistanceHelper(S, T, m, n - 1);     // Insert
+        int deleteOp = editDistanceHelper(S, T, m - 1, n);     // Delete
+        int replaceOp = editDistanceHelper(S, T, m - 1, n - 1);// Replace
+
+        // Return the minimum of the three operations plus one for the current operation
+        return 1 + Math.min(insertOp, Math.min(deleteOp, replaceOp));
+    }
+
+    public static void main(String[] args) {
+        String S = "sunday";
+        String T = "saturday";
+        
+        int result = editDistance(S, T);
+        System.out.println("Edit Distance between '" + S + "' and '" + T + "' is " + result);
+    }
+}
+
+//memoization, time complexity 𝑂(𝑀×𝑁)
+
+import java.util.Arrays;
+
+public class EditDistance {
+
+    // Function to calculate the edit distance using recursion with memoization
+    public static int editDistance(String S, String T) {
+        int[][] memo = new int[S.length() + 1][T.length() + 1];
+        for (int[] row : memo) {
+            Arrays.fill(row, -1);
+        }
+        return editDistanceHelper(S, T, S.length(), T.length(), memo);
+    }
+
+    // Helper function for recursion with memoization
+    private static int editDistanceHelper(String S, String T, int m, int n, int[][] memo) {
+        // Base cases
+        if (m == 0) return n; // If S is empty, we need to insert all characters of T
+        if (n == 0) return m; // If T is empty, we need to remove all characters of S
+
+        // Check if the value is already computed
+        if (memo[m][n] != -1) {
+            return memo[m][n];
+        }
+
+        // If last characters are the same, no operation is needed, move to the next characters
+        if (S.charAt(m - 1) == T.charAt(n - 1)) {
+            memo[m][n] = editDistanceHelper(S, T, m - 1, n - 1, memo);
+        } else {
+            // If last characters are different, consider all three operations
+            int insertOp = editDistanceHelper(S, T, m, n - 1, memo);     // Insert
+            int deleteOp = editDistanceHelper(S, T, m - 1, n, memo);     // Delete
+            int replaceOp = editDistanceHelper(S, T, m - 1, n - 1, memo);// Replace
+
+            // Take the minimum of the three operations plus one for the current operation
+            memo[m][n] = 1 + Math.min(insertOp, Math.min(deleteOp, replaceOp));
+        }
+        return memo[m][n];
+    }
+
+    public static void main(String[] args) {
+        String S = "sunday";
+        String T = "saturday";
+        
+        int result = editDistance(S, T);
+        System.out.println("Edit Distance between '" + S + "' and '" + T + "' is " + result);
+    }
+}
+
+
+//using Iteration method O(M×N).
+
+public class EditDistance {
+
+    // Function to calculate the edit distance using an iterative DP approach
+    public static int editDistance(String S, String T) {
+        int m = S.length();
+        int n = T.length();
+
+        // Create a DP table to store results of subproblems
+        int[][] dp = new int[m + 1][n + 1];
+
+        // Fill dp[][] in bottom up manner
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                // If S is empty, all characters of T need to be inserted
+                if (i == 0) {
+                    dp[i][j] = j;
+                }
+                // If T is empty, all characters of S need to be removed
+                else if (j == 0) {
+                    dp[i][j] = i;
+                }
+                // If last characters are the same, ignore last character and recur for remaining strings
+                else if (S.charAt(i - 1) == T.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                }
+                // If last characters are different, consider all three operations
+                else {
+                    dp[i][j] = 1 + Math.min(dp[i][j - 1], // Insert
+                                            Math.min(dp[i - 1][j], // Remove
+                                                     dp[i - 1][j - 1])); // Replace
+                }
+            }
+        }
+
+        // Return the result from the dp table
+        return dp[m][n];
+    }
+
+    public static void main(String[] args) {
+        String S = "sunday";
+        String T = "saturday";
+        
+        int result = editDistance(S, T);
+        System.out.println("Edit Distance between '" + S + "' and '" + T + "' is " + result);
+    }
+}
