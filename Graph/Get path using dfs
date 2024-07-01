@@ -1,0 +1,27 @@
+// Get path if exist if not get null using dfs 
+import java.util.Scanner;
+class Solution {
+    public static ArrayList<Integer> getPathDfsHelper(int edges[][],int sv,int ev,boolean visited[]){
+        if(sv==ev){
+            ArrayList<Integer>ans=new ArrayList<>();
+            ans.add(sv);
+            return ans;
+        }
+        visited[sv]=true;
+        int n=edges.length;
+        for(int i=0;i<n;i++){
+            if(edges[sv][i]==1 && !visited[i]){
+                    ArrayList<Integer>smallAns=getPathDfsHelper(edges,i,ev,visted);
+                    if(smallAns!=null){
+                        smallAns.add(sv);
+                        return smallAns;
+                    }
+                }
+            }
+            return null;
+        }
+    
+    public static ArrayList<Integer> getPathDfs(int edges[][],int sv,int ev){
+        boolean visited[]=new boolean[edges.length];
+        return getPathDfsHelper(edges,sv,ev,visited);
+    }

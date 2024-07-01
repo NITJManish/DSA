@@ -1,0 +1,126 @@
+// Get path if exist if not get null using Bfs
+
+import java.util.Scanner;  // Imports the Scanner class for user input
+import java.util.ArrayList;  // Imports the ArrayList class
+import java.util.Map;  // Imports the Map interface
+import java.util.HashMap;  // Imports the HashMap class
+import java.util.Queue;  // Imports the Queue interface
+import java.util.LinkedList;  // Imports the LinkedList class
+
+class Solution {  // Defines a class named Solution
+    public static ArrayList<Integer> getPathBfsHelper(int edges[][], int sv, int ev, boolean visited[]) {
+        // Method to find the path using BFS in a graph represented by an adjacency matrix
+        int n = edges.length;  // Get the number of vertices in the graph
+        Map<Integer, Integer> map = new HashMap<>();  // Create a map to store parent-child relationships
+        Queue<Integer> queue = new LinkedList<>();  // Create a queue for BFS
+        
+        // Check if the start vertex (sv) or end vertex (ev) is out of bounds
+        if (sv > (edges.length - 1) || ev > (edges.length - 1)) {
+            return null;  // Return null if out of bounds
+        }
+
+        // Check if the start vertex is the same as the end vertex and if there's an edge
+        if (edges[sv][ev] == 1 && sv == ev) {
+            ArrayList<Integer> ans = new ArrayList<>();  // Create a list to store the path
+            ans.add(sv);  // Add the start vertex to the list
+            return ans;  // Return the list
+        }
+
+        queue.add(sv);  // Add the start vertex to the queue
+        visited[sv] = true;  // Mark the start vertex as visited
+
+        // Start the BFS loop
+        while (!queue.isEmpty()) {  // Loop until the queue is empty
+            int front = queue.remove();  // Dequeue the front vertex
+            for (int i = 0; i < n; i++) {  // Iterate over all vertices
+                // Check if there is an edge and the vertex is not visited
+                if (edges[front][i] == 1 && !visited[i]) {
+                    map.put(i, front);  // Map the current vertex to its parent
+                    queue.add(i);  // Add the current vertex to the queue
+                    visited[i] = true;  // Mark the current vertex as visited
+                    
+                    // Check if the current vertex is the end vertex
+                    if (i == ev) {
+                        ArrayList<Integer> ans = new ArrayList<>();  // Create a list to store the path
+                        ans.add(ev);  // Add the end vertex to the list
+                        int value = map.get(ev);  // Get the parent of the end vertex
+                        
+                        // Trace back from the end vertex to the start vertex
+                        while (value != sv) {
+                            ans.add(value);  // Add each parent to the list
+                            value = map.get(value);  // Move to the next parent
+                        }
+                        ans.add(value);  // Add the start vertex to the list
+                        return ans;  // Return the list
+                    }
+                }
+            }
+        }
+        return null;  // Return null if no path is found
+    }
+}
+
+
+
+Another method  
+
+
+// Get path if exist if not get null using Bfs 
+
+public static ArrayList<Integer> getPathBFS(int adjMatrix[][], int s, int e){
+    Queue<Integer> pendingVertices = new LinkedList<>(); 
+    HashMap<Integer, Integer> map = new HashMap<>(); 
+    boolean visited[] = new boolean[adjMatrix.length]; 
+    visited[s] = true; 
+    pendingVertices.add(s); 
+    map.put(s, -1); 
+    boolean pathFound = false;
+    
+    while(!pendingVertices.isEmpty()){
+    int currentVertex = pendingVertices.poll(); 
+    for(int i = 0; i < adjMatrix.length; i++){ 
+    if(adjMatrix[currentVertex][i] == 1 && !visited[i]){
+    pendingVertices.add(i); 
+    visited[i] = true; 
+    map.put(i, currentVertex); 
+    if(i == e) {
+    // Path found 
+    pathFound = true; 
+    break;
+    }
+    }
+    }
+    }
+    if(pathFound){
+    ArrayList<Integer> path = new ArrayList<>(); 
+    int currentVertex = e; 
+    while( currentVertex != -1){
+    path.add(currentVertex); 
+    int parent = map.get(currentVertex); 
+    currentVertex = parent;
+    }
+    return path;
+    }else{
+    return null;
+    }
+    }
+    
+    public static void main(String[] args) {
+    Scanner s = new Scanner(System.in); 
+    int n = s.nextInt(); 
+    int e = s.nextInt(); 
+    int adjMatrix[][] = new int[n][n]; 
+    for(int i = 0; i <e; i++){
+    int v1 = s.nextInt(); 
+    int v2 = s.nextInt(); 
+    adjMatrix[v1][v2] = 1; 
+    adjMatrix[v2][v1] = 1;
+    }
+    int source= s.nextInt();
+    int end=s.nextInt();
+    ArrayList<Integer>path=getPathBFS(adjMatrix,source,end);
+    for(Integer i:path){
+    System.out.Print(i+ " ");
+    }
+    }
+    }

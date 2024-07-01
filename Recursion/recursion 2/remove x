@@ -1,0 +1,26 @@
+##  Given a string, compute recursively a new string where all 'x' chars have been removed.
+
+Sample Input 1 :
+xaxb
+Sample Output 1:
+ab
+Sample Input 2 :
+abc
+Sample Output 2:
+abc
+Sample Input 3 :
+xx
+Sample Output 3:
+
+
+public static String removeX(String s,char x){
+        if(s.length()==0){
+            return s;
+        }
+        String smallOutput=removeX(s.substring(1),x);
+        if(s.charAt(0)==x){
+            return smallOutput;
+        }else{
+            return s.charAt(0)+smallOutput;
+        }
+    }

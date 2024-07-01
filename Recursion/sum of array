@@ -1,0 +1,36 @@
+## Given an array of length N, you need to find and return the sum of all elements of the array.
+
+Do this recursively.
+
+
+  public class Solution {
+
+	public static int sum(int input[]) {
+		
+       int n=input.length;
+       return sumR(input,n);
+		
+	}
+    private static int sumR(int input[],int n)
+    {
+         if(n<=0)
+            return 0;
+        return sumR(input,n-1)+input[n-1];
+    }
+}
+
+method 2
+
+public class Solution {
+
+	public static int sum(int input[]) {
+       return sumR(input,0);
+		
+	}
+    private static int sumR(int input[],int startIndex)
+    {
+         if(startIndex==input.length)
+            return 0;
+        return sumR(input,startIndex+1)+input[startIndex];
+    }
+}
