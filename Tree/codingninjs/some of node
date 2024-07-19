@@ -1,0 +1,23 @@
+
+Problem statement
+For a given Binary Tree of integers, find and return the sum of all the nodes data.
+
+
+
+public static int getSum(BinaryTreeNode<Integer> root) {
+		//Your code goes here.
+		if(root==null){
+			return 0;
+		}
+		else
+		return root.data + getSum(root.left) + getSum(root.right);
+        
+     //   int sumOfAllNodes(BinaryTreeNode<int>* root) {
+    /* Given a binary tree, find and return the sum of all nodes. */
+    // if(root==null) return 0;
+    // int result = root.data; // root node
+    // result += getSum(root.left);
+    // result += getSum(root.right);
+    // return result;
+        
+	}

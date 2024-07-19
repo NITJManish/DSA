@@ -1,0 +1,39 @@
+Given an array A[] consisting of only 0s, 1s, and 2s. The task is to sort the array, i.e., put all 0s first, then all 1s and all 2s in last.
+
+This problem is the same as the famous “Dutch National Flag problem”. The problem was proposed by Edsger Dijkstra. The problem is as follows:
+
+
+
+ static void sort012(int a[], int n)
+    {
+        int lo = 0;
+        int hi = n - 1;
+        int mid = 0, temp = 0;
+        // Iterate till all the elements
+        // are sorted
+        while (mid <= hi) {
+            switch (a[mid]) {
+                // If the element is 0
+                case 0: {
+                    temp = a[lo];
+                    a[lo] = a[mid];
+                    a[mid] = temp;
+                    lo++;
+                    mid++;
+                    break;
+                }
+                    // If the element is 1
+                case 1:
+                    mid++;
+                    break;
+                    // If the element is 2
+                case 2: {
+                    temp = a[mid];
+                    a[mid] = a[hi];
+                    a[hi] = temp;
+                    hi--;
+                    break;
+                }
+            }
+        }
+    }
