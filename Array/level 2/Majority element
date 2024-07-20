@@ -1,0 +1,87 @@
+Majority Element
+Last Updated : 14 Jun, 2024
+Find the majority element in the array. A majority element in an array A[] of size n is an element that appears more than n/2 times (and hence there is at most one such element). 
+
+Examples : 
+
+Input : A[]={3, 4, 2, 4, 2, 4, 4}
+Output : 4
+Explanation: The frequency of 4 is greater than the half of the size of the array size. 
+
+Input : A[] = {3, 3, 4, 2, 4, 4, 2, 4}
+Output : No Majority Element
+Explanation: There is no element whose frequency is greater than the half of the size of the array size.
+
+
+Follow the steps below to solve the given problem:
+
+Loop through each element and maintains a count of the majority element, and a majority index, maj_index
+If the next element is the same then increment the count if the next element is not the same then decrement the count.
+if the count reaches 0 then change the maj_index to the current element and set the count again to 1.
+Now again traverse through the array and find the count of the majority element found.
+If the count is greater than half the size of the array, print the element
+Else print that there is no majority element
+
+
+/* Program for finding out majority element in an array */
+
+class MajorityElement {
+    /* Function to print Majority Element */
+    void printMajority(int a[], int size)
+    {
+        /* Find the candidate for Majority*/
+        int cand = findCandidate(a, size);
+
+        /* Print the candidate if it is Majority*/
+        if (isMajority(a, size, cand))
+            System.out.println(" " + cand + " ");
+        else
+            System.out.println("No Majority Element");
+    }
+
+    /* Function to find the candidate for Majority */
+    int findCandidate(int a[], int size)
+    {
+        int maj_index = 0, count = 1;
+        int i;
+        for (i = 1; i < size; i++) {
+            if (a[maj_index] == a[i])
+                count++;
+            else
+                count--;
+            if (count == 0) {
+                maj_index = i;
+                count = 1;
+            }
+        }
+        return a[maj_index];
+    }
+
+    /* Function to check if the candidate occurs more
+       than n/2 times */
+    boolean isMajority(int a[], int size, int cand)
+    {
+        int i, count = 0;
+        for (i = 0; i < size; i++) {
+            if (a[i] == cand)
+                count++;
+        }
+        if (count > size / 2)
+            return true;
+        else
+            return false;
+    }
+
+    /* Driver code */
+    public static void main(String[] args)
+    {
+        MajorityElement majorelement
+            = new MajorityElement();
+        int a[] = new int[] { 1, 3, 3, 1, 2 };
+      
+        // Function call
+        int size = a.length;
+        majorelement.printMajority(a, size);
+    }
+}
+
