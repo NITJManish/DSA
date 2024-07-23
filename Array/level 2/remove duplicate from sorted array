@@ -1,0 +1,64 @@
+
+
+Remove duplicates from Sorted Array
+
+Given a sorted array arr[] of size N, the task is to remove the duplicate elements from the array.
+
+Examples: 
+
+Input: arr[] = {2, 2, 2, 2, 2}
+Output: arr[] = {2}
+Explanation: All the elements are 2, So only keep one instance of 2.
+
+Input: arr[] = {1, 2, 2, 3, 4, 4, 4, 5, 5}
+Output: arr[] = {1, 2, 3, 4, 5}
+
+
+
+
+
+public class RemoveDuplicates {
+    
+    // This method removes duplicates from a sorted array and returns the new length.
+    public static int removeDuplicates(int[] nums) {
+        // If the array is empty, return 0 because there's nothing to process.
+        if (nums.length == 0) return 0;
+
+        // Initialize a pointer to track the position of unique elements.
+        int uniqueIndex = 0;
+
+        // Loop through the array starting from the second element.
+        for (int i = 1; i < nums.length; i++) {
+            // If the current element is different from the element at uniqueIndex,
+            // it means we have found a new unique element.
+            if (nums[i] != nums[uniqueIndex]) {
+                // Move the uniqueIndex to the next position.
+                uniqueIndex++;
+                // Update the element at uniqueIndex to be the current unique element.
+                nums[uniqueIndex] = nums[i];
+            }
+        }
+
+        // Return the length of the array without duplicates,
+        // which is the position of the last unique element + 1.
+        return uniqueIndex + 1;
+    }
+
+    // The main method to demonstrate the removeDuplicates function.
+    public static void main(String[] args) {
+        // Define a sorted array with duplicates.
+        int[] nums = {1, 1, 2, 2, 3, 4, 4, 5};
+        
+        // Call the removeDuplicates method and store the new length.
+        int newLength = removeDuplicates(nums);
+
+        // Print the new length of the array after removing duplicates.
+        System.out.println("The new length of the array is: " + newLength);
+        
+        // Print the array elements up to the new length.
+        System.out.print("The array after removing duplicates is: ");
+        for (int i = 0; i < newLength; i++) {
+            System.out.print(nums[i] + " ");
+        }
+    }
+}

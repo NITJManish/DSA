@@ -1,0 +1,40 @@
+Remove all occurrences of an element from Array in Java
+Given an array and a key, the task is to remove all occurrences of the specified key from the array in Java. Examples:
+
+Input: array = { 3, 9, 2, 3, 1, 7, 2, 3, 5 }, key = 3
+Output: [9, 2, 1, 7, 2, 5]
+
+Input: array = { 10, 20, 10, 30, 50, 10 }, key = 10
+Output: [20, 30, 50]
+
+
+public class RemoveElement {
+    
+    public static int removeElement(int[] nums, int val) {
+        int newIndex = 0; // Pointer to track the position of elements to be retained
+
+        // Traverse through the array
+        for (int i = 0; i < nums.length; i++) {
+            // If the current element is not equal to the value to be removed, retain it
+            if (nums[i] != val) {
+                nums[newIndex] = nums[i];
+                newIndex++;
+            }
+        }
+
+        // Return the new length of the array after removing the specified element
+        return newIndex;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {3, 2, 2, 3, 4, 2, 5};
+        int val = 2;
+        int newLength = removeElement(nums, val);
+
+        System.out.println("The new length of the array is: " + newLength);
+        System.out.print("The array after removing all occurrences of " + val + " is: ");
+        for (int i = 0; i < newLength; i++) {
+            System.out.print(nums[i] + " ");
+        }
+    }
+}

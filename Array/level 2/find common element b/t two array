@@ -1,0 +1,52 @@
+Java Program to Find Common Elements Between Two Arrays
+Last Updated : 06 Mar, 2024
+Given two arrays and our task is to find their common elements. 
+Examples:
+
+Input:  Array1 = [“Article”, “for”, “Geeks”, “for”, “Geeks”], 
+            Array2 = [“Article”, “Geeks”, “Geeks”]
+Output: [Article,Geeks]
+
+Input:  Array1 = [“a”, “b”, “c”, “d”, “e”, “f”], 
+            Array2 = [“b”, “d”, “e”, “h”, “g”, “c”]
+Output: [b, c, d, e]
+
+
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Arrays;
+
+public class CommonElements {
+
+    // Method to find common elements between two arrays
+    public static Set<String> findCommonElements(String[] array1, String[] array2) {
+        // Use a HashSet to store unique elements from the first array
+        Set<String> set1 = new HashSet<>(Arrays.asList(array1));
+        // Use another HashSet to store common elements
+        Set<String> commonElements = new HashSet<>();
+
+        // Traverse the second array and add elements to commonElements if they are present in set1
+        for (String element : array2) {
+            if (set1.contains(element)) {
+                commonElements.add(element);
+            }
+        }
+
+        return commonElements;
+    }
+
+    public static void main(String[] args) {
+        // Example 1
+        String[] array1 = {"Article", "for", "Geeks", "for", "Geeks"};
+        String[] array2 = {"Article", "Geeks", "Geeks"};
+        Set<String> common1 = findCommonElements(array1, array2);
+        System.out.println("Common Elements: " + common1);
+
+        // Example 2
+        String[] array3 = {"a", "b", "c", "d", "e", "f"};
+        String[] array4 = {"b", "d", "e", "h", "g", "c"};
+        Set<String> common2 = findCommonElements(array3, array4);
+        System.out.println("Common Elements: " + common2);
+    }
+}
